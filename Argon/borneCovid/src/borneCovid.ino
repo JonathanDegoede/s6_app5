@@ -4,6 +4,7 @@
 
 unsigned long last_time = 0;
 int LED_PIN = D7;
+int counter = 0;
 
 void onCallback(Beacon& beacon, callback_type type) {
     Serial.printf("Address: %s. Type: %s", beacon.getAddress().toString().c_str(), (type == NEW) ? "Entered" : "Left");
@@ -17,12 +18,12 @@ void onCallback(Beacon& beacon, callback_type type) {
     Serial.print("\n");
 }
 
-void fakeEnter(){
-    Particle.publish("Entered", "Fake address");
+void fakeEnter(String address){
+    Particle.publish("Entered", address);
 }
 
-void fake(){
-    Particle.publish("Left", "Fake address");
+void fakeLeave(String address){
+    Particle.publish("Left", address);
 }
 
 int ledToggle(String command)
@@ -57,9 +58,17 @@ void setup() {
 }
 
 void loop() {
-    if(millis() - last_time > 5000){
+    if(millis() - last_time > 2000){
         last_time = millis();    
         Serial.println("Scanning...");
-        fakeEnter();
+        if(counter % 2 == 0){
+            fakeEnter("1001");
+            fakeLeave("1001");
+        }
+        else{
+            fakeEnter("1002");
+            fakeLeave("1002");
+        }
+        counter++;
     }
 }
