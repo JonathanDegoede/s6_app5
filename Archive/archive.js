@@ -17,13 +17,12 @@ app.use(cors(corsOptions))
 
 const client = connect('mqtt://test.mosquitto.org');
 
-const TOPIC_5122 = "App5/JonathanDegoede/5122";
+const TOPIC = "App5/JonathanDegoede";
 const file = './archive.txt';
 
 const parseMsg = (topic, data) => {
-    const local = topic.split("/")[2];
     const data_arr = data.split(":");
-    return `${local} ${data_arr[0]} ${data_arr[1]}`;	
+    return `${data_arr[0]} ${data_arr[1]} ${data_arr[2]}`;	
 };
 
 const archiveMsg = (msg, file) => {
@@ -40,13 +39,13 @@ const parseArchive = (file) => {
     const parsed = [];
     for(let i = 0; i < lines.length-1; i++) {
         const content = lines[i].split(" ");
-        parsed[i] = {"local" : content[0], "action" : content[1], "address" : content[2]};
+        parsed[i] = {"action" : content[0], "local" : content[1], "address" : content[2]};
     }
     return {"content" : parsed, "length" : parsed.length};
 }
 
 client.on('connect', () => {
-    client.subscribe(TOPIC_5122);
+    client.subscribe(TOPIC);
 });
 
 client.on('message', (topic, data) => {

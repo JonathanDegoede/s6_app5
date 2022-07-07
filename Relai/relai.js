@@ -10,7 +10,7 @@ const port = 3001;
 const TOKEN = "72ecdb3324a904ceebf149803f8194eb827300c5";
 const ENTERED = "Entered";
 const LEFT = "Left";
-const TOPIC_5122 = "App5/JonathanDegoede/5122";
+const TOPIC = "App5/JonathanDegoede";
 
 const client = connect('mqtt://test.mosquitto.org');
 
@@ -19,7 +19,7 @@ const onConnect = () => {
     const successFunc = (stream) => {
         stream.on('event', function(event) {
             const data = `${event.name}:${event.data}`;
-            client.publish(TOPIC_5122, data);
+            client.publish(TOPIC, data);
         });
     }
     
