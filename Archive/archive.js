@@ -39,7 +39,7 @@ const parseArchive = (file) => {
     const lines = raw.toString().split("\n");
     const parsed = [];
     for(let i = 0; i < lines.length-1; i++) {
-        const content = lines[0].split(" ");
+        const content = lines[i].split(" ");
         parsed[i] = {"local" : content[0], "action" : content[1], "address" : content[2]};
     }
     return {"content" : parsed, "length" : parsed.length};
