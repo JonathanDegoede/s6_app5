@@ -1,9 +1,20 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const LedControl = () => {
 
     const [isLedOn, setIsLedOn] = useState(false);
+    const [firstRender, setIsFirstRender] = useState(true);
+
+    useEffect(() => {
+        if(firstRender) {
+            setIsFirstRender(false);
+            axios.post('http://localhost:3003/led', {
+                state: 'off'
+            });
+        }
+    }, 
+    [firstRender]);
 
     const toggleLed = () => {
         const value = !isLedOn ? 'on' : 'off';

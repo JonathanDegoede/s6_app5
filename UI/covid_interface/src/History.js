@@ -7,7 +7,12 @@ const History = () => {
         const json = await response.json();
         const content = json.content;
         const length = json.length;
-        return content.slice(length-11, length-1);
+        var result = content;
+        if(length >= 10) {
+            result = content.slice(length-10, length);
+        }
+        return result.reverse();
+
     }, {refetchInterval: 1000});
 
 

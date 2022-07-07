@@ -21,7 +21,7 @@ const TOPIC = "App5/JonathanDegoede";
 const file = './archive.txt';
 
 const parseMsg = (topic, data) => {
-    const data_arr = data.split(":");
+    const data_arr = data.split("/");
     return `${data_arr[0]} ${data_arr[1]} ${data_arr[2]}`;	
 };
 

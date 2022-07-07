@@ -18,7 +18,7 @@ const onConnect = () => {
 
     const successFunc = (stream) => {
         stream.on('event', function(event) {
-            const data = `${event.name}:${event.data}`;
+            const data = `${event.name}/${event.data}`;
             client.publish(TOPIC, data);
         });
     }
