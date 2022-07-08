@@ -1,4 +1,6 @@
-import { useQuery } from "react-query";
+import { useCallback, useEffect, useState } from "react";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../node_modules/@mui/material/index";
+import { useQuery } from "../node_modules/react-query/es/react/useQuery";
 
 const History = () => {
 
@@ -15,29 +17,69 @@ const History = () => {
 
     }, {refetchInterval: 1000});
 
+    const [emptyRows, setEmptyRows] = useState([]);
+
+    const fillEmptyRows = useCallback (() => {
+        const rows = [];
+        const length = data?.length ? 10 - data?.length : 10;
+        for(let i = 0; i < length; i++) {
+            rows.push({
+                local : "",
+                action : "",
+                address : "",
+            });
+        }
+        setEmptyRows(rows);
+    }, [data]);
+
+    useEffect(()=>{
+        fillEmptyRows();
+    }, [data, fillEmptyRows])
 
     return (
-        <div>
-            <h2>History</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Local</th>
-                        <th>Action</th>
-                        <th>Address</th>
-                    </tr>
-                    {data && data.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{item.local}</td>
-                                <td>{item.action}</td>
-                                <td>{item.address}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-        </div>
+        <>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align={"center"}>Local</TableCell>
+                            <TableCell align={"center"}>Event</TableCell>
+                            <TableCell align={"center"}>Address</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            data && data.map((item, index) => {
+                                return (
+                                    <TableRow key={index}>
+                                        <TableCell sx={{padding: "14px"}} align={"center"}>{item.local}</TableCell>
+                                        <TableCell sx={{padding: "14px"}} align={"center"}>{item.action}</TableCell>
+                                        <TableCell sx={{padding: "14px"}} align={"center"}>{item.address}</TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                        {
+                            emptyRows.map((item, index) => {
+                                return (
+                                    <TableRow key={index}>
+                                        <TableCell align={"center"} sx={{ padding: "14px", height: "20px"}}>
+                                            <Box />
+                                        </TableCell>
+                                        <TableCell align={"center"} sx={{ padding: "14px", height: "20px"}}>
+                                            <Box />
+                                        </TableCell>
+                                        <TableCell align={"center"} sx={{padding: "14px", height: "20px"}}>
+                                            <Box />
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
     );
 }
 

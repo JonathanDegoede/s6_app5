@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios from '../node_modules/axios/index';
 import { useEffect, useState } from 'react';
+import { Box, Switch } from '../node_modules/@mui/material/index';
 
 const LedControl = () => {
 
@@ -26,10 +27,12 @@ const LedControl = () => {
     }
 
     return (
-        <div>
-            <div>Led state: {isLedOn ? "ON" : "OFF"}</div>
-            <button onClick={toggleLed}>Toggle led</button>
-        </div>
+        <>
+            <Box sx={{fontFamily : "Roboto", marginTop: "10px"}}>
+                <Switch onClick={toggleLed}/>
+                <span>Toggle led</span>
+            </Box>
+        </>
     )
 }
 
