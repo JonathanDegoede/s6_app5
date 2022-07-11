@@ -54,10 +54,9 @@ client.on('message', (topic, data) => {
 });
 
 app.get("/archive", (req, res) => {
-    res.type('json');
-    return res.json(parseArchive(file));
+    res.status(200).send(parseArchive(file));
 });
 
 app.listen(port, () =>
-  console.log(`Example app listening on port ${port}!`),
+  console.log(`App listening on port ${port}!`),
 );
