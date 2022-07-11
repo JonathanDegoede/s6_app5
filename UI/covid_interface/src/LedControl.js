@@ -5,17 +5,12 @@ import { Box, Switch } from '../node_modules/@mui/material/index';
 const LedControl = () => {
 
     const [isLedOn, setIsLedOn] = useState(false);
-    const [firstRender, setIsFirstRender] = useState(true);
 
     useEffect(() => {
-        if(firstRender) {
-            setIsFirstRender(false);
-            axios.post('http://localhost:3003/led', {
-                state: 'off'
-            });
-        }
-    }, 
-    [firstRender]);
+        axios.post('http://localhost:3003/led', {
+            state: 'off'
+        });
+    }, []);
 
     const toggleLed = () => {
         const value = !isLedOn ? 'on' : 'off';

@@ -49,7 +49,7 @@ const History = () => {
                     </TableHead>
                     <TableBody>
                         {
-                            data && data.map((item, index) => {
+                            data.map((item, index) => {
                                 return (
                                     <TableRow key={index}>
                                         <TableCell sx={{padding: "14px"}} align={"center"}>{item.local}</TableCell>
